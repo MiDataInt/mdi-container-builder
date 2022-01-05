@@ -55,9 +55,20 @@ export VERSION=$SINGULARITY_VERSION && \
     cd $GOPATH/src/github.com/sylabs/singularity && \
     git fetch && \
     git checkout $VERSION 
+
+echo
+echo ============================
+pwd
+ls -l
+which mconfig
+echo ============================
+
 ./mconfig && \
     make -C ./builddir && \
     sudo make -C ./builddir install
+
+#####################
+exit
 
 # set server groups
 echo 

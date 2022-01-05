@@ -105,7 +105,7 @@ bash ./initialize-container-builder.sh
 It will take many minutes for all of the server components 
 to be installed, in particular, Singularity.
 
-### Secure the bare bones AMI for public distribution
+### Secure the AMI for public distribution
 
 Container builder images should be made public for anyone to use by
 setting the Permissions in the AWS console after creating the AMI. 

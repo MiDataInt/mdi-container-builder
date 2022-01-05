@@ -33,17 +33,14 @@ sudo apt-get install -y \
     binutils
 
 # install Singularity
-# see https://sylabs.io/guides/3.0/user-guide/installation.html
-# some adjustments were needed from the instructions at that page
+# see https://sylabs.io/guides/3.9/user-guide/installation.html
 echo 
 echo "install additional tools required by Singularity"
 sudo apt-get install -y \
-    libssl-dev \
-    uuid-dev \
-    libgpgme11-dev \
-    squashfs-tools \
     libseccomp-dev \
-    pkg-config
+    pkg-config \
+    squashfs-tools \
+    cryptsetup
 echo 
 echo "install Go"
 export VERSION=$GO_VERSION OS=linux ARCH=amd64 && \
@@ -56,7 +53,7 @@ export GOPATH=${HOME}/go # sourcing ~/.bashrc does not work
 export PATH=/usr/local/go/bin:${PATH}:${GOPATH}/bin
 echo 
 echo "install Singularity"
-cd ~ # use git instead of deprecated(?) go commands to clone singularity
+cd ~ # chose to use git clone rather than package download, either works
 export VERSION=$SINGULARITY_VERSION && \
     git clone https://github.com/sylabs/singularity.git && \
     cd singularity && \

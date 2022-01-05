@@ -34,8 +34,9 @@ sudo apt-get install -y \
 
 # install Singularity
 # see https://sylabs.io/guides/3.0/user-guide/installation.html
+# some adjustments were needed from the instructions at that page
 echo 
-echo "install Singularity"
+echo "install additional tools required by Singularity"
 sudo apt-get install -y \
     libssl-dev \
     uuid-dev \
@@ -43,33 +44,26 @@ sudo apt-get install -y \
     squashfs-tools \
     libseccomp-dev \
     pkg-config
+echo 
+echo "install Go"
 export VERSION=$GO_VERSION OS=linux ARCH=amd64 && \
     wget https://dl.google.com/go/go$VERSION.$OS-$ARCH.tar.gz && \
     sudo tar -C /usr/local -xzvf go$VERSION.$OS-$ARCH.tar.gz && \
     rm go$VERSION.$OS-$ARCH.tar.gz
 echo 'export GOPATH=${HOME}/go' >> ~/.bashrc && \
     echo 'export PATH=/usr/local/go/bin:${PATH}:${GOPATH}/bin' >> ~/.bashrc
-source ~/.bashrc
-go get -u github.com/golang/dep/cmd/dep
-go get -d github.com/sylabs/singularity
+export GOPATH=${HOME}/go # sourcing ~/.bashrc does not work
+export PATH=/usr/local/go/bin:${PATH}:${GOPATH}/bin
+echo 
+echo "install Singularity"
+cd ~ # use git instead of deprecated(?) go commands to clone singularity
 export VERSION=$SINGULARITY_VERSION && \
-    cd $GOPATH/src/github.com/sylabs/singularity && \
-    git fetch && \
+    git clone https://github.com/sylabs/singularity.git && \
+    cd singularity && \
     git checkout $VERSION 
-
-echo
-echo ============================
-pwd
-ls -l
-which mconfig
-echo ============================
-
 ./mconfig && \
     make -C ./builddir && \
     sudo make -C ./builddir install
-
-#####################
-exit
 
 # set server groups
 echo 
@@ -78,7 +72,7 @@ sudo groupadd mdi-edit
 sudo usermod -a -G mdi-edit ubuntu
 
 #---------------------------------------------------------------
-# continue as user ubuntu (i.e., not sudo) to install mdi
+# continue as user ubuntu (i.e., not sudo) to install the MDI
 #---------------------------------------------------------------
 
 # clone the MDI installer
@@ -96,5 +90,10 @@ cd mdi
 # validate and report success
 echo
 echo "installation summary"
+echo
+go version
 singularity --version
+echo
+echo ~/mdi
+ls -l ~/mdi
 echo

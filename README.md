@@ -11,7 +11,7 @@ Information on the Singularity container platform can be found here:
 
 - <https://sylabs.io/guides/3.5/user-guide/introduction.html>
 
-Note: this repository is for building the container-builder AMI - 
+Note: this repository is for building the container-builder AMI; 
 container build actions are coded in the pipelines framework:
 
 - <https://github.com/MiDataInt/mdi-pipelines-framework.git>
@@ -56,7 +56,7 @@ larger images.
 
 The installer uses the MiDataInt/mdi repo to install the MDI and all
 of the frameworks independently of R, since container building is
-only relevant for pipelines, i.e., R Shiny apps are not used.
+only relevant for pipelines, not R Shiny apps.
 
 ---
 ## Instructions for creating the container-builder AMI
@@ -102,9 +102,8 @@ cd mdi-container-builder
 bash ./initialize-container-builder.sh
 ```
 
-It will take a few minutes for all of the server components 
-to be installed.
-
+It will take many minutes for all of the server components 
+to be installed, in particular, Singularity.
 
 ### Secure the bare bones AMI for public distribution
 
@@ -146,3 +145,20 @@ relatively unchanging mdi-container-builder repo.
 >
 >**description**  
 >Michigan Data Interface, container builder image, Ubuntu 20.04, Singularity 1.17.5, yyyy_mm_dd
+
+---
+## Instructions for using container-builder
+
+### Launch an AWS instance
+
+Launch an EC2 instance with the specifications listed above (or, choose
+a different base OS or AWS region, if desired).
+
+<https://us-east-2.console.aws.amazon.com/ec2/v2/home?region=us-east-2#Instances:>
+
+### Run the container builder
+
+```bash
+mdi build --help
+mdi build [OPTIONS] GIT_USER/SUITE_NAME
+```

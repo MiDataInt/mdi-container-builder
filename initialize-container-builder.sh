@@ -48,8 +48,9 @@ export VERSION=$GO_VERSION OS=linux ARCH=amd64 && \
     sudo tar -C /usr/local -xzvf go$VERSION.$OS-$ARCH.tar.gz && \
     rm go$VERSION.$OS-$ARCH.tar.gz
 echo 'export GOPATH=${HOME}/go' >> ~/.bashrc && \
-    echo 'export PATH=/usr/local/go/bin:${PATH}:${GOPATH}/bin' >> ~/.bashrc && \
-    source ~/.bashrc
+    echo 'export PATH=/usr/local/go/bin:${PATH}:${GOPATH}/bin' >> ~/.bashrc
+source ~/.bashrc
+go get -u github.com/golang/dep/cmd/dep
 go get -d github.com/sylabs/singularity
 export VERSION=$SINGULARITY_VERSION && \
     cd $GOPATH/src/github.com/sylabs/singularity && \

@@ -9,7 +9,7 @@ Information on AWS AMIs can be found here:
 
 Information on the Singularity container platform can be found here:
 
-- <https://sylabs.io/guides/3.5/user-guide/introduction.html>
+- <https://sylabs.io/guides/latest/user-guide/introduction.html>
 
 Note: this repository is for building the container-builder AMI; 
 container build actions are coded in the pipelines framework:
@@ -26,8 +26,8 @@ container build actions are coded in the pipelines framework:
 - **region** = Ohio, us-east-2
 - **instance type** = t3.medium (2 vCPU, 4 GB RAM)
 - **storage** = 20 GB EBS SSD
-- **Singularity** = installed and ready to build container images
-- **MDI repositories** = mdi frameworks installed and ready for use in ~/mdi
+- **Singularity** = installed in ~/singularity and ready to build container images
+- **MDI repositories** = mdi frameworks installed in ~/mdi and ready for use
 
 #### Linux operating system
 
@@ -72,18 +72,18 @@ installing Singularity, the MDI, and other system tools.
 Launch an EC2 instance with the specifications listed above (or, choose
 a different base OS or AWS region, if desired).
 
-<https://us-east-2.console.aws.amazon.com/ec2/v2/home?region=us-east-2#Instances:>
+- <https://us-east-2.console.aws.amazon.com/ec2/v2/home?region=us-east-2#Instances:>
 
 ### Log in to the new instance using an SSH terminal
 
 Details for how to log in to an AWS instance are amply documented by Amazon.
 
-<https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstances.html>
+- <https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstances.html>
 
 Among many choices, we typically use Visual Studio Code with a remote connection 
 established via SSH:
 
->https://code.visualstudio.com/docs/remote/remote-overview>
+- <https://code.visualstudio.com/docs/remote/remote-overview>
 
 ### Clone this repository
 
@@ -141,13 +141,13 @@ The container builder image should be named and described according to the follo
 relatively unchanging mdi-container-builder repo.
 
 >**name**  
->mdi-container-builder-ubuntu_20.04-singularity_1.17.5-yyyy_mm_dd
+>mdi-container-builder_ubuntu-20.04_singularity-1.17.5_yyyy-mm-dd
 >
 >**description**  
->Michigan Data Interface, container builder image, Ubuntu 20.04, Singularity 1.17.5, yyyy_mm_dd
+>Michigan Data Interface, container builder image, Ubuntu 20.04, Singularity 1.17.5, yyyy-mm-dd
 
 ---
-## Instructions for using container-builder
+## Instructions for using the container-builder
 
 ### Launch an AWS instance
 

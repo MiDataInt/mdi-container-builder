@@ -159,6 +159,6 @@ a different base OS or AWS region, if desired).
 ### Run the container builder
 
 ```bash
-mdi build --help
-mdi build [OPTIONS] GIT_USER/SUITE_NAME
+mdi pipeline build --help
+mdi pipeline build [OPTIONS]
 ```

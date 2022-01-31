@@ -1,6 +1,6 @@
 ## mdi-container-builder
 
-Admin-only resource to create Amazon Machine Image (AMI) for helping 
+Admin-only resource to create an Amazon Machine Image (AMI) for helping 
 developers build Singularity container images from Amazon Web Services (AWS).
 
 Information on AWS AMIs can be found here:  
@@ -11,8 +11,9 @@ Information on the Singularity container platform can be found here:
 
 - <https://sylabs.io/guides/latest/user-guide/introduction.html>
 
-Note: this repository is for building the container-builder AMI; 
-container build actions are coded in the pipelines framework:
+Note: this repository is for building the container-builder AMI,
+not the Singularity containers themselves. Container build actions 
+are coded in the pipelines framework:
 
 - <https://github.com/MiDataInt/mdi-pipelines-framework.git>
 
@@ -32,7 +33,7 @@ container build actions are coded in the pipelines framework:
 #### Linux operating system
 
 Any Linux system can build Singularity images, but we use Ubuntu Linux
-by default, with version 20.04 being current as of this writing.
+by default, with version 20.04 LTS being current as of this writing.
 
 #### AWS region
 
@@ -46,17 +47,23 @@ Ohio, us-east-2, AWS region, the one closest to Ann Arbor, MI.
 An AMI is not tied to a specific instance type, but we create the 
 container builder with sufficient resources, i.e., t3 medium.
 
+When launching a container builder instance, it is beneficial to 
+select an instance type with more CPUs, which speeds R package
+compilations and Singularity image compression (unfortunately, 
+conda environment building doesn't benefit much from more CPUs at present, 
+see [here](https://www.anaconda.com/blog/how-we-made-conda-faster-4-7)).
+
 #### Storage
 
 Storage volume size can be adjusted when a new EC2 instance is launched,
 but we create the container builder with sufficient storage to build
-larger images.
+several larger images. Developers can safely delete older images once 
+they are pushed to a container registry.
 
 #### MDI repositories
 
 The installer uses the MiDataInt/mdi repo to install the MDI and all
-of the frameworks independently of R, since container building is
-only relevant for pipelines, not R Shiny apps.
+of the frameworks independently of R.
 
 ---
 ## Instructions for creating the container-builder AMI
@@ -126,7 +133,7 @@ a running instance, there will be no other keys or access tokens on the disk
 to be copied into the image.
 
 It is also critical to note that once the above commands are executed, the 
-instance from which the Tier 2 AMI is to be created may not be accessible
+instance from which the Tier 2 AMI is to be created will not be accessible
 if it is stopped and restarted. However, a new instance can always be launched
 from the saved AMI.
 
@@ -147,18 +154,45 @@ relatively unchanging mdi-container-builder repo.
 >Michigan Data Interface, container builder image, Ubuntu 20.04, Singularity 1.17.5, yyyy-mm-dd
 
 ---
-## Instructions for using the container-builder
+## Instructions for using the container-builder AMI
 
 ### Launch an AWS instance
 
 Launch an EC2 instance with the specifications listed above (or, choose
-a different base OS or AWS region, if desired).
+a different instance type or storage amount, if desired).
 
 <https://us-east-2.console.aws.amazon.com/ec2/v2/home?region=us-east-2#Instances:>
 
-### Run the container builder
+### Build a container
+
+First, be sure you have edited either '_config.yml' and/or 'pipeline.yml'
+to declare the type of containers you will support, and how.
+
+Then, to build a suite level container:
 
 ```bash
-mdi pipeline build --help
-mdi pipeline build [OPTIONS]
+mdi build --help
+mdi build --suite GIT_USER/REPOSITORY_NAME
 ```
+
+To build a pipeline-level container, first edit '~/mdi/config/suites.yml' as for
+any MDI installation and run:
+
+```bash
+cd ~/mdi
+nano config/suites.yml
+./install.sh
+mdi PIPELINE_NAME build --help
+mdi PIPELINE_NAME build [OPTIONS]
+```
+
+In either case, you will be asked to confirm the build action and
+the process will then build your container and push it to the 
+registry specified in your configuration files.
+
+### Make your container image public
+
+Importantly, when a new image is pushed to your registry, e.g.,
+the GitHub Container Registry, it will typically be marked Private.
+Be sure the follow the instructions of your container registry
+to make the image Public if you intend for others to use it.

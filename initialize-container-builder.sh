@@ -4,8 +4,8 @@
 # Script to set up an AWS Ubuntu instance for building Singularity images.
 # Create a new EC2 instance, then run this script from an SSH command prompt.
 #---------------------------------------------------------------
-GO_VERSION=1.17.5          # https://go.dev/dl/
-SINGULARITY_VERSION=v3.9.2 # https://github.com/sylabs/singularity/releases
+GO_VERSION=1.17.6          # https://go.dev/dl/
+SINGULARITY_VERSION=v3.9.4 # https://github.com/sylabs/singularity/releases
 #---------------------------------------------------------------
 
 #---------------------------------------------------------------

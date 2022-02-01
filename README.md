@@ -148,10 +148,10 @@ The container builder image should be named and described according to the follo
 relatively unchanging mdi-container-builder repo.
 
 >**name**  
->mdi-container-builder_ubuntu-20.04_singularity-1.17.5_yyyy-mm-dd
+>mdi-container-builder_ubuntu-20.04_singularity-3.9.4_yyyy-mm-dd
 >
 >**description**  
->Michigan Data Interface, container builder image, Ubuntu 20.04, Singularity 1.17.5, yyyy-mm-dd
+>Michigan Data Interface, container builder image, Ubuntu 20.04, Singularity 3.9.4, yyyy-mm-dd
 
 ---
 ## Instructions for using the container-builder AMI

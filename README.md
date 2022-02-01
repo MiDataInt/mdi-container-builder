@@ -2,7 +2,6 @@
 
 Admin-only resource to create an Amazon Machine Image (AMI) for helping 
 developers build Singularity container images from Amazon Web Services (AWS).
-
 Information on AWS AMIs can be found here:  
 
 - <https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html>
@@ -38,15 +37,13 @@ by default, with version 20.04 LTS being current as of this writing.
 #### AWS region
 
 AWS AMIs are region specific, i.e., they are only available to be used
-for launching instances in the same region as the AMI itself. Because
-the MDI uses a "Michigan first" approach, we build all AMIs in the
-Ohio, us-east-2, AWS region, the one closest to Ann Arbor, MI.
+for launching instances in the same region as the AMI itself. We build all 
+supported AMIs in the Ohio, us-east-2, AWS region closest to Ann Arbor, MI.
 
 #### Instance type
 
-An AMI is not tied to a specific instance type, but we create the 
-container builder with sufficient resources, i.e., t3 medium.
-
+An AMI is not tied to a specific instance type. We create the 
+container builder AMI with sufficient resources, i.e., t3 medium.
 When launching a container builder instance, it is beneficial to 
 select an instance type with more CPUs, which speeds R package
 compilations and Singularity image compression (unfortunately, 
@@ -55,8 +52,8 @@ see [here](https://www.anaconda.com/blog/how-we-made-conda-faster-4-7)).
 
 #### Storage
 
-Storage volume size can be adjusted when a new EC2 instance is launched,
-but we create the container builder with sufficient storage to build
+Storage volume size can be expanded when a new EC2 instance is launched.
+We create the container builder with sufficient storage to build
 several larger images. Developers can safely delete older images once 
 they are pushed to a container registry.
 
@@ -84,12 +81,10 @@ a different base OS or AWS region, if desired).
 ### Log in to the new instance using an SSH terminal
 
 Details for how to log in to an AWS instance are amply documented by Amazon.
+Among many choices, we typically use Visual Studio Code with a remote connection 
+established via SSH.
 
 - <https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstances.html>
-
-Among many choices, we typically use Visual Studio Code with a remote connection 
-established via SSH:
-
 - <https://code.visualstudio.com/docs/remote/remote-overview>
 
 ### Clone this repository
@@ -109,7 +104,7 @@ cd mdi-container-builder
 bash ./initialize-container-builder.sh
 ```
 
-It will take many minutes for all of the server components 
+It will take a while for all of the server components 
 to be installed, in particular, Singularity.
 
 ### Secure the AMI for public distribution
@@ -128,14 +123,12 @@ which removes ssh keys and restricts root login permissions:
 bash ~/mdi-container-builder/prepare-public-ami.sh
 ```
 
-If the sequence above was followed, and no other manipulations were done to 
-a running instance, there will be no other keys or access tokens on the disk 
-to be copied into the image.
+If the sequence above was followed, there will be no other keys or access 
+tokens on the disk to be copied into the image.
 
-It is also critical to note that once the above commands are executed, the 
-instance from which the Tier 2 AMI is to be created will not be accessible
-if it is stopped and restarted. However, a new instance can always be launched
-from the saved AMI.
+Once the commands above are executed, the 
+instance from which the AMI is created will not be accessible
+after it is stopped - just launch a new instance from the saved AMI.
 
 ### Save the AMI
 
@@ -144,7 +137,7 @@ select the running EC2 instance and execute:
 
 Actions --> Images and templates --> Create image
 
-The container builder image should be named and described according to the following conventions. We use a timestamp that can be used to infer the version of the 
+The container builder image should be named and described according to the following conventions. The timestamp can be used to infer the version of the 
 relatively unchanging mdi-container-builder repo.
 
 >**name**  
@@ -158,10 +151,9 @@ relatively unchanging mdi-container-builder repo.
 
 ### Launch an AWS instance
 
-Launch an EC2 instance with the specifications listed above (or, choose
-a different instance type or storage amount, if desired).
+Launch an EC2 instance with the required resources.
 
-<https://us-east-2.console.aws.amazon.com/ec2/v2/home?region=us-east-2#Instances:>
+- <https://us-east-2.console.aws.amazon.com/ec2/v2/home?region=us-east-2#Instances:>
 
 ### Build a container
 
@@ -186,9 +178,8 @@ mdi PIPELINE_NAME build --help
 mdi PIPELINE_NAME build [OPTIONS]
 ```
 
-In either case, you will be asked to confirm the build action and
-the process will then build your container and push it to the 
-registry specified in your configuration files.
+In either case, you will be asked to confirm the action to build your container 
+and push it to the registry specified in your configuration files.
 
 ### Make your container image public
 

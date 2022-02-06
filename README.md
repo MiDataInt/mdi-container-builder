@@ -163,8 +163,9 @@ to declare the type of containers you will support, and how.
 Then, to build a suite level container:
 
 ```bash
-mdi build --help
-mdi build --suite GIT_USER/REPOSITORY_NAME
+cd ~/mdi
+./mdi build --help
+./mdi build --suite GIT_USER/REPOSITORY_NAME
 ```
 
 To build a pipeline-level container, first edit '~/mdi/config/suites.yml' as for
@@ -174,8 +175,8 @@ any MDI installation and run:
 cd ~/mdi
 nano config/suites.yml
 ./install.sh
-mdi PIPELINE_NAME build --help
-mdi PIPELINE_NAME build [OPTIONS]
+./mdi PIPELINE_NAME build --help
+./mdi PIPELINE_NAME build [OPTIONS]
 ```
 
 In either case, you will be asked to confirm the action to build your container 

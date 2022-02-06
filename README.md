@@ -164,6 +164,7 @@ Then, to build a suite level container:
 
 ```bash
 cd ~/mdi
+./install.sh # make sure frameworks are up to date
 ./mdi build --help
 ./mdi build --suite GIT_USER/REPOSITORY_NAME
 ```
@@ -174,7 +175,7 @@ any MDI installation and run:
 ```bash
 cd ~/mdi
 nano config/suites.yml
-./install.sh
+./install.sh # install the new suite and update the frameworks
 ./mdi PIPELINE_NAME build --help
 ./mdi PIPELINE_NAME build [OPTIONS]
 ```

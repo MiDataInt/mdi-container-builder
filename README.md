@@ -21,7 +21,7 @@ are coded in the pipelines framework:
 
 ### Summary of the AMI:
 
-- **source AMI** = Ubuntu 20.04 standard image, X86_64
+- **source AMI** = Ubuntu 22.04 standard image, X86_64
 - **Linux user** = ubuntu, the AWS standard
 - **region** = Ohio, us-east-2
 - **instance type** = t3.medium (2 vCPU, 4 GB RAM)
@@ -32,7 +32,7 @@ are coded in the pipelines framework:
 #### Linux operating system
 
 Any Linux system can build Singularity images, but we use Ubuntu Linux
-by default, with version 20.04 LTS being current as of this writing.
+by default, with version 22.04 LTS being current as of this writing.
 
 #### AWS region
 
@@ -90,7 +90,7 @@ established via SSH.
 ### Clone this repository
 
 From within your terminal, i.e., bash command shell, on the new instance 
-(note that git is pre-installed with Ubuntu 20.04):
+(note that git is pre-installed with Ubuntu):
 
 ```bash
 cd ~
@@ -137,14 +137,15 @@ select the running EC2 instance and execute:
 
 Actions --> Images and templates --> Create image
 
-The container builder image should be named and described according to the following conventions. The timestamp can be used to infer the version of the 
-relatively unchanging mdi-container-builder repo.
+The container builder image should be named and described according to the 
+following conventions (change the versions as needed). The timestamp can be 
+used to infer the version of the relatively unchanging mdi-container-builder repo.
 
 >**name**  
->mdi-container-builder_ubuntu-20.04_singularity-3.9.4_yyyy-mm-dd
+>mdi-container-builder_ubuntu-22.04_singularity-3.10.0_yyyy-mm-dd
 >
 >**description**  
->Michigan Data Interface, container builder image, Ubuntu 20.04, Singularity 3.9.4, yyyy-mm-dd
+>Michigan Data Interface, container builder image, Ubuntu 22.04, Singularity 3.10.0, yyyy-mm-dd
 
 ---
 ## Instructions for using the container-builder AMI

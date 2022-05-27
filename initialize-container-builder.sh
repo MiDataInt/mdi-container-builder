@@ -58,7 +58,7 @@ export VERSION=$SINGULARITY_VERSION && \
     git clone https://github.com/sylabs/singularity.git && \
     cd singularity && \
     git checkout $VERSION 
-./mconfig && \
+./mconfig --without-conmon && \
     make -C ./builddir && \
     sudo make -C ./builddir install
 

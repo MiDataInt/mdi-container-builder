@@ -1,6 +1,11 @@
-## mdi-container-builder
+# MDI Container Builder
 
-Admin-only resource to create an Amazon Machine Image (AMI) for helping 
+The [Michigan Data Interface](https://midataint.github.io/) (MDI) 
+is a framework for developing, installing and running 
+Stage 1 HPC **pipelines** and Stage 2 interactive web applications 
+(i.e., **apps**) in a standardized design interface.
+
+This repository carries admin-only resource to create an Amazon Machine Image (AMI) for helping 
 developers build Singularity container images from Amazon Web Services (AWS).
 
 Information on AWS AMIs can be found here:  

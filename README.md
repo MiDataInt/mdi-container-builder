@@ -5,7 +5,7 @@ is a framework for developing, installing and running
 Stage 1 HPC **pipelines** and Stage 2 interactive web applications 
 (i.e., **apps**) in a standardized design interface.
 
-This repository carries admin-only resource to create an Amazon Machine Image (AMI) for helping 
+This repository carries admin-only resources to create an Amazon Machine Image (AMI) for helping 
 developers build Singularity container images from Amazon Web Services (AWS).
 Information on AWS AMIs can be found here:  
 
@@ -15,11 +15,33 @@ Information on the Singularity container platform can be found here:
 
 - <https://sylabs.io/guides/latest/user-guide/introduction.html>
 
-Note: this repository is for building the container-builder AMI,
+Note: this repository is for building the mdi-container-builder AMI,
 not the Singularity containers themselves. Container build actions 
 are coded in the pipelines framework:
 
 - <https://github.com/MiDataInt/mdi-pipelines-framework.git>
+
+---
+## Different kinds of MDI containers
+
+The MDI offers two general kinds of containers. 
+This repository helps build **partially encapsulated Singularity containers**
+running either an individual pipeline or an entire tool suite, 
+where "partially encapsulated" means the end user must also install 
+the MDI on their computer and run a container similar to:
+
+```sh
+mdi myPipeline --runtime singularity [pipeline options]
+```
+
+Advantages of this approach are that 
+users can make use of the MDI's powerful pipeline management commands.
+
+The following repository describes 
+fully encapsulated Docker containers 
+suitable for executing pipelines on any computer using Docker:
+
+- <https://github.com/MiDataInt/mdi-dockerizer>
 
 ---
 ## General Information
@@ -50,10 +72,7 @@ supported AMIs in the Ohio, us-east-2, AWS region closest to Ann Arbor, MI.
 An AMI is not tied to a specific instance type. We create the 
 container builder AMI with sufficient resources, i.e., t3 medium.
 When launching a container builder instance, it is beneficial to 
-select an instance type with more CPUs, which speeds R package
-compilations and Singularity image compression (unfortunately, 
-conda environment building doesn't benefit much from more CPUs at present, 
-see [here](https://www.anaconda.com/blog/how-we-made-conda-faster-4-7)).
+select an instance type with more CPUs, which speeds some steps.
 
 #### Storage
 
@@ -65,12 +84,12 @@ they are pushed to a container registry.
 #### MDI repositories
 
 The installer uses the MiDataInt/mdi repo to install the MDI and all
-of the frameworks independently of R.
+of its frameworks.
 
 ---
 ## Instructions for creating the container-builder AMI
 
-The steps below will clone the mdi-container-builder repo into a new EC2 
+The steps below will clone this mdi-container-builder repo into a new EC2 
 instance and execute the server configuration script to prepare for 
 the build actions to be taken by developers in eventual instances.
 The script prepares the operating system to run 'mdi build' by
@@ -110,7 +129,7 @@ bash ./initialize-container-builder.sh
 ```
 
 It will take a while for all of the server components 
-to be installed, in particular, Singularity.
+to be installed.
 
 ### Secure the AMI for public distribution
 
